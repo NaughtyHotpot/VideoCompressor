@@ -279,9 +279,14 @@ public void scheduleVideoConvert(String path, String dest) {
                 resultHeight = originalHeight / 2;
                 bitrate = resultWidth * resultHeight * 10;
                 break;
+//            case COMPRESS_QUALITY_LOW:
+//                resultWidth = originalWidth / 2;
+//                resultHeight = originalHeight / 2;
+//                bitrate = (resultWidth/2) * (resultHeight/2) * 10;
+//                break;
             case COMPRESS_QUALITY_LOW:
-                resultWidth = originalWidth / 2;
-                resultHeight = originalHeight / 2;
+                resultWidth = originalWidth / 4;
+                resultHeight = originalHeight / 4;
                 bitrate = (resultWidth/2) * (resultHeight/2) * 10;
                 break;
         }
