@@ -1,5 +1,6 @@
 package com.vincent.videocompressor;
 
+import android.media.MediaMetadataRetriever;
 import android.os.AsyncTask;
 
 /**
@@ -10,6 +11,23 @@ import android.os.AsyncTask;
 
 public class VideoCompress {
     private static final String TAG = VideoCompress.class.getSimpleName();
+
+    public static int getCompressQuality(String srcPath){
+        int compressQuality = VideoController.COMPRESS_QUALITY_LOW;
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+        retriever.setDataSource(srcPath);
+        String width = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH);
+        String height = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT);
+        int originalWidth = Integer.valueOf(width);
+        int originalHeight = Integer.valueOf(height);
+        int longValue = originalWidth > originalHeight ? originalWidth : originalHeight;
+        if(longValue<1400&&longValue>700){
+            compressQuality = VideoController.COMPRESS_QUALITY_MEDIUM;
+        }else if(longValue<=700){
+            return 0;
+        }
+        return compressQuality;
+    }
 
     public static VideoCompressTask compressVideoHigh(String srcPath, String destPath, CompressListener listener) {
         VideoCompressTask task = new VideoCompressTask(listener, VideoController.COMPRESS_QUALITY_HIGH);
